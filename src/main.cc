@@ -6,6 +6,7 @@
 #include "Windows.h"
 #include "blook/misc.h"
 #include "blook/process.h"
+#include "zasm/base/immediate.hpp"
 
 void open_console() {
     AllocConsole();
@@ -16,7 +17,7 @@ HOOKPROC keyboard_hook_addr = nullptr;
 HOOKPROC mouse_hook_addr = nullptr;
 
 void entry() {
-    open_console();
+    // open_console();
     blook::misc::install_optimize_dll_hijacking("HID.dll");
 
     auto self = blook::Process::self();
@@ -26,16 +27,35 @@ void entry() {
 
         SetWindowsHookExW_hook->install([=](int idHook, HOOKPROC lpfn, HINSTANCE hMod, DWORD dwThreadId) -> HHOOK {
             if (idHook == WH_KEYBOARD_LL) {
-                keyboard_hook_addr = lpfn;
-                std::println("Captured keyboard hook address: {}", (void *) keyboard_hook_addr);
+                static bool hooked = false;
+                if (hooked)
+                    return SetWindowsHookExW_hook->call_trampoline<HHOOK>(idHook, lpfn, hMod, dwThreadId);
+                hooked = true;
+                std::println("Captured keyboard hook address: {}", (void *) lpfn);
+
+                auto ptr = blook::Pointer((void *) lpfn);
+                auto instr = *ptr.range_size(0x20).disassembly().begin();
+                if (instr->getMnemonic() == zasm::x86::Mnemonic::Jmp) {
+                    lpfn = (HOOKPROC) instr->getOperand(0).get<zasm::Imm>().value<size_t>();
+                    ptr = blook::Pointer((void *) lpfn);
+                    std::println("Resolved jmp function at address: {}", (void *) ptr.data());
+                }
+
+                auto hook = ptr.as_function().inline_hook();
+                hook->install([=](int nCode, WPARAM wParam, LPARAM lParam) -> LRESULT {
+                    if (nCode >= 0 && (wParam == WM_SYSKEYDOWN || wParam == WM_SYSKEYUP)) {
+                        return hook->call_trampoline<LRESULT>(nCode, wParam, lParam);
+                    } else {
+                        return CallNextHookEx(nullptr, nCode, wParam, lParam);
+                    }
+                });
+                keyboard_hook_addr = (HOOKPROC) hook->trampoline_raw();
             } else if (idHook == WH_MOUSE_LL) {
                 mouse_hook_addr = lpfn;
                 std::println("Captured mouse hook address: {}", (void *) mouse_hook_addr);
-            } else {
-                return SetWindowsHookExW_hook->call_trampoline<HHOOK>(idHook, lpfn, hMod, dwThreadId);
             }
 
-            return (HHOOK) 0x1234;
+            return SetWindowsHookExW_hook->call_trampoline<HHOOK>(idHook, lpfn, hMod, dwThreadId);
         });
 
         auto TranslateMessage_proc = user32->exports("TranslateMessage").value();
