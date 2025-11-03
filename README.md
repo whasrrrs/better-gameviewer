@@ -9,7 +9,9 @@ GameViewer / UU 远程补丁，修复了 UU 远程在 Windows 下键盘/鼠标�
 
 评论区有群友提到一个 Bug ，在双击的时候对鼠标行为的处理是不正确的；我稍微逆向研究了一下，把这个 Bug 修掉了
 
-分析图二中关键代码可知（函数名都是我乱标的，不要在意），网易 UU 接收了 WM_LBUTTONDBLCLK 事件（0x140318171），然后将这个事件用一个单独的枚举值，也就是 4，表示 “收到了一个双击”，传递给按键处理函数；然后将全局变量 data_14214acdc 赋值为 1，这个全局变量其实是一个 flag，表示“跳过下一个 WM_LBUTTONUP”（0x140318080）
+<img width="1079" height="1266" alt="image" src="https://github.com/user-attachments/assets/e7562953-3873-4a31-a628-3465b59eaa6c" />
+
+分析图中关键代码可知（函数名都是我乱标的，不要在意），网易 UU 接收了 WM_LBUTTONDBLCLK 事件（0x140318171），然后将这个事件用一个单独的枚举值，也就是 4，表示 “收到了一个双击”，传递给按键处理函数；然后将全局变量 data_14214acdc 赋值为 1，这个全局变量其实是一个 flag，表示“跳过下一个 WM_LBUTTONUP”（0x140318080）
 
 这样操作以后，如果输入序列为
 按下 弹起 按下 弹起
@@ -27,6 +29,11 @@ GameViewer / UU 远程补丁，修复了 UU 远程在 Windows 下键盘/鼠标�
 不知道这块代码是谁写的...有点怪，明明注册了 Raw Device 但是却不用相关的数据，转而继续使用常规的 WM 方式决定鼠标状态；而且 Windows 默认是不发送双击事件的，双击事件只有在注册特殊 style 后才会发送，说明是哪个大聪明专门注册了这个 style...
 
 如果有认识 UU 那边的人的群友可以帮忙转告一下，让他们顺手把这个很影响体验的 bug 修了~
+
+<img width="1031" height="372" alt="image" src="https://github.com/user-attachments/assets/301e8253-b29c-4431-8393-4175c953c852" />
+
+<img width="268" height="152" alt="image" src="https://github.com/user-attachments/assets/56bc7659-da73-498c-94f1-a0fea2e9cc08" />
+
 
 然后发现 uu 的键盘输入也有问题...太离谱了
 
